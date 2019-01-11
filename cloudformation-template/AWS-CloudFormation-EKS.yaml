@@ -327,7 +327,7 @@ Resources:
       FromPort: 443
       ToPort: 443
 
-  AllowIPv4HTTPsToEKSClusterFromWorkerNodes:
+  AllowIPv4HTTPsInboundToEKSClusterFromWorkerNodes:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
       Description: Allow pods to communicate with the cluster API Server
@@ -336,6 +336,26 @@ Resources:
       IpProtocol: tcp
       ToPort: 443
       FromPort: 443
+
+  AllowIPv4AllInboundFromEKSClustertoEKSCluster:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      Description: Allow pods to communicate with the cluster API Server
+      GroupId: !Ref EKSClusterSecurityGroup
+      SourceSecurityGroupId: !Ref EKSClusterSecurityGroup
+      IpProtocol: -1
+      ToPort: 0
+      FromPort: 65535
+
+  AllowIPv4AllOutboundFromEKSClustertoEKSCluster:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      Description: Allow pods to communicate with the cluster API Server
+      GroupId: !Ref EKSClusterSecurityGroup
+      SourceSecurityGroupId: !Ref EKSClusterSecurityGroup
+      IpProtocol: -1
+      ToPort: 0
+      FromPort: 65535
 
   WorkerNodeLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -390,3 +410,6 @@ Outputs:
   EKSClusterName:
     Description: The node instance role
     Value: !Ref EKSCluster
+  WorkNodesIAMRoleArn:
+    Description: The node instance role
+    Value: !GetAtt WorkerNodeInstanceRole.Arn
