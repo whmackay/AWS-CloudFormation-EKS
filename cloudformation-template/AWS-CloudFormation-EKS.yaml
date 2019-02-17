@@ -15,7 +15,7 @@ Parameters:
   WorkerNodeImageId:
     Type: AWS::EC2::Image::Id
     Description: AMI id for the EKS Worker node instances. Search EKS Worker AMIs provided by AWS.
-    Default: "ami-094fa4044a2a3cf52"
+    Default: "ami-081099ec932b99961"
 
   WorkerNodeInstanceType:
     Description: EC2 instance type for the node instances
@@ -107,7 +107,7 @@ Parameters:
   WorkerNodeAutoScalingGroupMinSize:
     Type: Number
     Description: Minimum size of Node Group ASG.
-    Default: 1
+    Default: 2
 
   WorkerNodeAutoScalingGroupMaxSize:
     Type: Number
@@ -117,7 +117,7 @@ Parameters:
   WorkerNodeAutoScalingGroupDesiredCapacity:
     Type: Number
     Description: Desired capacity of Node Group ASG.
-    Default: 3
+    Default: 2
 
   WorkerNodeBootstrapArguments:
     Description: Arguments to pass to the bootstrap script. See files/bootstrap.sh in https://github.com/awslabs/amazon-eks-ami
